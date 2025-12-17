@@ -18,10 +18,6 @@ const Navbar: React.FC = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
-  if (isAdmin) {
-    navLinks.push({ name: 'Admin Panel', path: '/admin' });
-  }
-
   const isActive = (path: string) => location.pathname === path;
 
   const handleSearch = (e: React.FormEvent) => {
