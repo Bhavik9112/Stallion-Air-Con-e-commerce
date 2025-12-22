@@ -1,77 +1,74 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stallion Air Con - Premium HVAC Services</title>
+    <title>Stallion Air Con - Premium HVAC & Refrigeration Spare Parts Vapi</title>
+    <meta name="description" content="Leading supplier of genuine HVAC and refrigeration spare parts in Vapi GIDC. Authorized dealer for LG, Samsung, Danfoss, and Copeland. Bulk refrigerant gas and industrial cooling solutions.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Single Store Schema (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HVACBusiness",
+      "name": "Stallion Air Con",
+      "image": "https://stallionaircon.com/vapi-store.png",
+      "@id": "https://stallionaircon.com/#vapi",
+      "url": "https://stallionaircon.com",
+      "telephone": "+918866004475",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Shop No. 37, Commercial Zone, Ritesh Shopping Centre, GIDC Char Rasta",
+        "addressLocality": "Vapi",
+        "addressRegion": "Gujarat",
+        "postalCode": "396195",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 20.365065,
+        "longitude": 72.918243
+      },
+      "areaServed": ["Vapi", "Silvassa", "Daman", "Valsad"],
+      "description": "Premium HVAC and refrigeration spare parts supplier specializing in industrial cooling and refrigerant gases."
+    }
+    </script>
+
     <style>
-      body {
-        font-family: 'Inter', sans-serif;
-      }
-      /* Custom scrollbar for chat */
-      .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-      }
-      .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-      }
-      
-      /* Infinite Scroll Animation */
-      @keyframes scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-      }
-      .animate-scroll {
-        animation: scroll 40s linear infinite;
-      }
-      .animate-scroll:hover {
-        animation-play-state: paused;
-      }
-
-      /* Animations used in components */
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      .animate-fade-in-up {
-        animation: fadeInUp 0.5s ease-out forwards;
-      }
-      
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-      .animate-fade-in {
-        animation: fadeIn 0.5s ease-out forwards;
-      }
-
-      @keyframes bounceSlow {
-        0%, 100% { transform: translateY(-10%); }
-        50% { transform: translateY(10%); }
-      }
-      .animate-bounce-slow {
-        animation: bounceSlow 3s infinite ease-in-out;
-      }
+      body { font-family: 'Inter', sans-serif; }
+      .scrollbar-hide::-webkit-scrollbar { display: none; }
+      .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+      .animate-scroll { animation: scroll 40s linear infinite; }
+      .animate-scroll:hover { animation-play-state: paused; }
+      @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      .animate-fade-in-up { animation: fadeInUp 0.5s ease-out forwards; }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+      @keyframes bounceSlow { 0%, 100% { transform: translateY(-10%); } 50% { transform: translateY(10%); } }
+      .animate-bounce-slow { animation: bounceSlow 3s infinite ease-in-out; }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react/": "https://esm.sh/react@18.3.1/",
-    "react-dom": "https://esm.sh/react-dom@18.3.1",
-    "react-dom/": "https://esm.sh/react-dom@18.3.1/",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@18.3.1",
-    "react-router-dom": "https://esm.sh/react-router-dom@6.28.0?deps=react@18.3.1,react-dom@18.3.1",
-    "@google/genai": "https://esm.sh/@google/genai@^1.33.0"
-  }
-}
-</script>
-</head>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.3.1",
+        "react/": "https://esm.sh/react@18.3.1/",
+        "react-dom": "https://esm.sh/react-dom@18.3.1",
+        "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+        "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@18.3.1",
+        "react-router-dom": "https://esm.sh/react-router-dom@6.28.0?deps=react@18.3.1,react-dom@18.3.1",
+        "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.46.1"
+      }
+    }
+    </script>
+  </head>
   <body>
     <div id="root"></div>
   </body>

@@ -1,3 +1,4 @@
+
 export interface Category {
   id: string;
   name: string;
@@ -5,21 +6,28 @@ export interface Category {
   image?: string;
 }
 
+export interface BrandCatalogue {
+  name: string;
+  pdf: string;
+}
+
 export interface Brand {
   id: string;
   name: string;
   logo?: string;
-  cataloguePdf?: string; // URL or Base64 data for the catalogue
+  catalogues?: BrandCatalogue[]; // Support for multiple catalogues
+  logoSize?: number; // Scale percentage (e.g., 50 to 150)
 }
 
 export interface Product {
   id: string;
   name: string;
   description: string;
+  specifications?: string; // Field for technical data / additional info
   sku: string;
   categoryId: string;
   subCategoryId?: string;
-  brandId: string;
+  brandIds: string[]; // Support for multiple brands
   image: string;
   status: 'active' | 'draft';
   pdf?: string; // URL or Base64 data for product manual/spec sheet
@@ -58,6 +66,7 @@ export interface ContactMessage {
   name: string;
   email: string;
   phone: string;
+  company?: string;
   service: string;
   message: string;
   date: string;

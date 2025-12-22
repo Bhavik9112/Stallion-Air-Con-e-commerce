@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
 const SYSTEM_INSTRUCTION = `
@@ -26,42 +27,45 @@ export const sendMessageToGemini = async (
   imageBase64?: string
 ): Promise<string> => {
   try {
-    const apiKey = process.env.API_KEY;
-    if (!apiKey) {
-      return "Error: API Key is missing. Please configure the environment.";
-    }
-
-    const ai = new GoogleGenAI({ apiKey });
+    // Fix: Initialization must use the named parameter `apiKey` with `process.env.API_KEY` exclusively.
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
-    // We use gemini-2.5-flash for fast, responsive chat
-    const modelId = imageBase64 ? "gemini-2.5-flash-image" : "gemini-2.5-flash";
+    // Fix: Select the recommended Gemini 3 Flash model for basic text and vision tasks.
+    const modelId = "gemini-3-flash-preview";
 
     const parts: any[] = [];
     
     if (imageBase64) {
+      // Fix: Strip data URI prefix as Gemini API expects raw base64 data.
+      const base64Data = imageBase64.includes('base64,') 
+        ? imageBase64.split('base64,')[1] 
+        : imageBase64;
+        
       parts.push({
         inlineData: {
           mimeType: "image/jpeg",
-          data: imageBase64,
+          data: base64Data,
         },
       });
     }
     
     parts.push({ text: newMessage });
 
+    // Fix: When `maxOutputTokens` is specified for Gemini 3 series, `thinkingConfig.thinkingBudget` must also be set.
     const response: GenerateContentResponse = await ai.models.generateContent({
       model: modelId,
       contents: {
-        role: "user",
         parts: parts
       },
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
         maxOutputTokens: 500,
+        thinkingConfig: { thinkingBudget: 100 },
         temperature: 0.4, // Lower temperature for more factual technical specs
       },
     });
 
+    // Fix: Access `.text` as a property, not a method.
     return response.text || "I'm having trouble identifying that part. Please try providing the Model Number directly.";
   } catch (error) {
     console.error("Gemini API Error:", error);

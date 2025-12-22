@@ -1,19 +1,21 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Wind, Phone, ShoppingBasket, ShieldCheck, User as UserIcon, LogIn, Search } from 'lucide-react';
+import { Menu, X, Phone, ShoppingBasket, User as UserIcon, LogIn, Search } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
+import Logo from './Logo';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
-  const { basket, isAdmin, currentUser } = useStore();
+  const { basket, currentUser } = useStore();
 
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Shop Parts', path: '/shop' },
-    { name: 'Catalogues', path: '/catalogues' },
+    { name: 'Brand Catalog', path: '/catalogues' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -30,14 +32,14 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-white/90 backdrop-blur-md border-b border-slate-200/50 sticky top-0 z-50 transition-all duration-300">
+    <nav className="bg-white/90 backdrop-blur-md border-b border-slate-200/50 sticky top-0 z-40 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 gap-4">
           {/* Logo Section */}
           <div className="flex items-center flex-shrink-0">
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="bg-gradient-to-br from-blue-600 to-blue-500 p-2 rounded-xl shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/40 transition-all duration-300">
-                <Wind className="h-6 w-6 text-white" />
+            <Link to="/" className="flex items-center gap-3 group">
+              <div className="p-1 rounded-xl transition-all duration-300 group-hover:scale-110">
+                <Logo className="h-10 w-auto" />
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-xl text-slate-800 tracking-tight leading-none group-hover:text-blue-700 transition-colors">STALLION<span className="text-blue-600"> AIR CON</span></span>
@@ -61,7 +63,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-shrink-0">
+          <div className="hidden lg:flex items-center space-x-4 lg:space-x-6 flex-shrink-0">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -100,7 +102,7 @@ const Navbar: React.FC = () => {
                 <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
                   <UserIcon size={14} />
                 </div>
-                <span className="max-w-[80px] truncate hidden lg:block">{currentUser.name.split(' ')[0]}</span>
+                <span className="max-w-[80px] truncate hidden xl:block">{currentUser.name.split(' ')[0]}</span>
               </Link>
             ) : (
               <Link 
@@ -122,7 +124,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex items-center gap-3 md:hidden">
+          <div className="flex items-center gap-3 lg:hidden">
              <button onClick={() => navigate('/shop?search=')} className="text-slate-600 p-2">
                  <Search size={24} />
              </button>
@@ -146,7 +148,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-xl absolute w-full left-0 top-20 h-[calc(100vh-5rem)] overflow-y-auto">
+        <div className="lg:hidden bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-xl absolute w-full left-0 top-20 h-[calc(100vh-5rem)] overflow-y-auto">
           <div className="px-4 py-6 space-y-4">
             
             {/* Mobile Search */}

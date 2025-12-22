@@ -1,8 +1,5 @@
 {
   "name": "Stallion Air Con",
   "description": "Leading supplier of HVAC and refrigeration spare parts. Request quotes for compressors, valves, tools, and more.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ]
+  "requestFramePermissions": []
 }

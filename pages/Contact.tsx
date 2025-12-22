@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Building2, Clock, MessageSquare, ShieldCheck } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 
 const Contact: React.FC = () => {
@@ -8,19 +9,28 @@ const Contact: React.FC = () => {
     name: '',
     email: '',
     phone: '',
-    service: 'installation',
+    company: '',
+    service: 'parts',
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitContactMessage(formData);
+    submitContactMessage({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      company: formData.company,
+      service: formData.service,
+      message: formData.message
+    });
     setIsSubmitted(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       setIsSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', service: 'installation', message: '' });
-    }, 3000);
+      setFormData({ name: '', email: '', phone: '', company: '', service: 'parts', message: '' });
+    }, 5000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -30,190 +40,222 @@ const Contact: React.FC = () => {
     });
   };
 
-  const inputClasses = "w-full px-4 py-3 rounded-lg bg-white border border-slate-200 text-slate-900 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none shadow-sm placeholder-slate-400";
+  const labelClasses = "block text-xs font-black text-slate-400 uppercase tracking-widest mb-2 pl-1";
+  const inputClasses = "w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none shadow-sm placeholder-slate-300 font-medium";
 
   return (
-    <div className="bg-slate-50 min-h-screen py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 animate-fade-in-up">
-          <h1 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Get in Touch</h1>
-          <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-            Ready to upgrade your comfort? Fill out the form below or give us a call. Our team is ready to assist you.
+    <div className="bg-slate-50 min-h-screen">
+      {/* Hero Section */}
+      <div className="bg-slate-900 py-20 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
+          <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tighter uppercase">Connect with Us</h1>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+            Contact leading industrial HVAC spares supplier. We are ready to assist with your technical requirements.
           </p>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {/* Contact Info Card */}
-          <div className="lg:col-span-1 bg-gradient-to-br from-blue-900 to-slate-900 text-white rounded-3xl p-8 shadow-2xl h-fit">
-            <h3 className="text-2xl font-bold mb-8">Contact Information</h3>
-            <div className="space-y-8">
-              <div className="flex items-start gap-4">
-                <div className="bg-white/10 p-3 rounded-2xl backdrop-blur-sm">
-                  <Phone className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-blue-200 text-sm mb-1 uppercase tracking-wider font-semibold">Call Us</p>
-                  <p className="font-semibold text-lg tracking-wide">088660 04475</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-4">
-                <div className="bg-white/10 p-3 rounded-2xl backdrop-blur-sm">
-                  <Mail className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-blue-200 text-sm mb-1 uppercase tracking-wider font-semibold">Email Us</p>
-                  <p className="font-semibold text-lg tracking-wide break-all">stallionaircon@gmail.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="bg-white/10 p-3 rounded-2xl backdrop-blur-sm">
-                  <MapPin className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-blue-200 text-sm mb-1 uppercase tracking-wider font-semibold">Visit Us</p>
-                  <p className="font-semibold text-lg leading-relaxed">
-                    C-5/37 Commercial Zone,<br />Ritesh Shopping Center,<br />G.I.D.C Char Rasta, Vapi (G.J.)
-                  </p>
-                </div>
+      <div className="max-w-7xl mx-auto px-4 -mt-10 pb-20">
+        {isSubmitted && (
+          <div className="mb-8 bg-blue-600 text-white p-6 rounded-3xl shadow-2xl flex items-center justify-between animate-fade-in border border-blue-400">
+            <div className="flex items-center gap-4">
+              <div className="bg-white/20 p-2 rounded-full"><ShieldCheck /></div>
+              <div>
+                <p className="font-black text-lg">Inquiry Transmitted</p>
+                <p className="text-blue-100 text-sm">Your request has been received. Our team will respond shortly.</p>
               </div>
             </div>
-            
-            <div className="mt-12 pt-8 border-t border-white/10">
-              <p className="text-blue-200 text-sm leading-relaxed">
-                <strong className="text-white block mb-1">Hours of Operation:</strong>
-                Mon - Fri: 9am - 8pm<br />
-                Sat: 9am - 8pm
-              </p>
-            </div>
+            <button onClick={() => setIsSubmitted(false)} className="text-white/50 hover:text-white"><MessageSquare size={20}/></button>
           </div>
+        )}
 
-          {/* Form */}
-          <div className="lg:col-span-2 bg-white rounded-3xl p-8 md:p-10 shadow-xl shadow-slate-200/50 border border-slate-100">
-            <h3 className="text-2xl font-bold text-slate-900 mb-6">Send us a Message</h3>
-            
-            {isSubmitted ? (
-              <div className="bg-green-50 border border-green-200 text-green-800 rounded-xl p-8 text-center animate-fade-in flex flex-col items-center">
-                <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4">
-                  <Send size={32} />
-                </div>
-                <p className="font-bold text-xl mb-2">Message Sent Successfully!</p>
-                <p className="text-green-700">We will get back to you within 24 hours.</p>
+        {/* Store Card */}
+        <div className="max-w-4xl mx-auto mb-16">
+          <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-xl shadow-slate-200/50 border-2 border-blue-500 relative group overflow-hidden ring-8 ring-blue-50/50">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="w-24 h-24 bg-slate-900 text-white rounded-3xl flex items-center justify-center shadow-lg shadow-slate-500/20 flex-shrink-0">
+                <Building2 size={48} />
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className={inputClasses}
-                      placeholder="e.g. John Doe"
-                    />
+              <div className="text-center md:text-left">
+                <h2 className="text-3xl font-black text-slate-900 tracking-tight uppercase mb-2">Stallion Air Con</h2>
+                <span className="text-blue-700 text-xs font-black uppercase tracking-[0.2em] block mb-6">Our Store Location</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                  <div className="flex gap-4 items-start text-left">
+                    <MapPin className="text-blue-500 shrink-0" size={24} />
+                    <p className="text-slate-600 font-medium leading-relaxed">
+                      Shop No. 37, Commercial Zone, Ritesh Shopping Centre,<br/>
+                      GIDC Char Rasta, Vapi, Gujarat 396195
+                    </p>
                   </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={inputClasses}
-                      placeholder="e.g. john@example.com"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className={inputClasses}
-                      placeholder="e.g. +91 88660 04475"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="service" className="block text-sm font-semibold text-slate-700 mb-2">Service Required</label>
-                    <div className="relative">
-                      <select
-                        id="service"
-                        name="service"
-                        value={formData.service}
-                        onChange={handleChange}
-                        className={`${inputClasses} appearance-none cursor-pointer`}
-                      >
-                        <option value="installation">New Installation</option>
-                        <option value="repair">Repair & Fix</option>
-                        <option value="maintenance">Maintenance</option>
-                        <option value="commercial">Commercial Quote</option>
-                        <option value="parts">Spare Parts</option>
-                        <option value="other">Other</option>
-                      </select>
-                      <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
-                        <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
-                      </div>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-4">
+                      <Phone className="text-blue-500" size={20} />
+                      <p className="font-black text-2xl text-slate-900 tracking-tight">+91 88660 04475</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Mail className="text-blue-500" size={20} />
+                      <p className="font-bold text-slate-600">stallionaircon@gmail.com</p>
                     </div>
                   </div>
                 </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-slate-700 mb-2">How can we help?</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    required
-                    value={formData.message}
-                    onChange={handleChange}
-                    className={`${inputClasses} resize-none`}
-                    placeholder="Tell us about your issue or requirements..."
-                  ></textarea>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold text-lg py-4 rounded-xl hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2"
-                >
-                  <Send size={20} />
-                  Send Message
-                </button>
-              </form>
-            )}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Map Section */}
-        <div className="w-full bg-white p-4 rounded-3xl shadow-sm border border-slate-100">
-           <div className="flex items-center gap-3 mb-4 px-2">
-             <MapPin className="text-blue-600" />
-             <h3 className="text-xl font-bold text-slate-900">Find Us on the Map</h3>
-           </div>
-           <div className="w-full h-96 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200">
-             <iframe 
-                src="https://maps.google.com/maps?q=Ritesh+Shopping+Center,+GIDC,+Vapi&hl=en&z=17&output=embed" 
-                width="100%" 
-                height="100%" 
-                style={{border:0}} 
-                allowFullScreen={true} 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Stallion Air Con Location"
-                className="filter grayscale-[20%] hover:grayscale-0 transition-all duration-500"
-              ></iframe>
-           </div>
+        {/* Interactive Map Section */}
+        <div className="max-w-5xl mx-auto mb-16">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Visit Our Store</h3>
+            <p className="text-slate-500 font-medium">Located in the heart of Vapi's industrial corridor.</p>
+          </div>
+          <div className="rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white bg-white h-[450px]">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3740.432126748696!2d72.91824357469707!3d20.365065310243907!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0ce385d3b34fb%3A0x5b9593ebd2fc3fb4!2sStallion%20Air%20Con!5e0!3m2!1sen!2sin!4v1766174153953!5m2!1sen!2sin" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen={true} 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Interactive Store Map"
+            ></iframe>
+          </div>
+        </div>
+
+        {/* Main Content Split */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
+          {/* Service Info */}
+          <div className="lg:col-span-4 space-y-8">
+            <div className="bg-slate-900 text-white rounded-[2rem] p-8 shadow-2xl relative overflow-hidden">
+               <div className="relative z-10">
+                <h3 className="text-xl font-black mb-6 flex items-center gap-2">
+                  <div className="w-2 h-6 bg-blue-500 rounded-full"></div>
+                  Support Hours
+                </h3>
+                <div className="space-y-8">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-white/10 p-3 rounded-xl border border-white/10">
+                      <Clock size={20} className="text-blue-400" />
+                    </div>
+                    <div>
+                      <p className="text-blue-300 text-[10px] font-black uppercase tracking-widest mb-1">Store Timings</p>
+                      <p className="font-black text-lg text-white">9 AM - 8 PM</p>
+                      <p className="text-xs text-slate-400 font-medium">Monday to Saturday</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="lg:col-span-8 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-xl border border-slate-100">
+            <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter uppercase">Direct Inquiry</h3>
+            <p className="text-slate-500 mb-10 font-medium">Specify your requirements and our specialists will assist you.</p>
+            
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <label htmlFor="name" className={labelClasses}>Name *</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={inputClasses}
+                    placeholder="Your Name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className={labelClasses}>Email *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={inputClasses}
+                    placeholder="name@example.com"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <label htmlFor="phone" className={labelClasses}>Phone</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className={inputClasses}
+                    placeholder="+91"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="company" className={labelClasses}>Company</label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className={inputClasses}
+                    placeholder="Company Name"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="service" className={labelClasses}>Inquiry Type</label>
+                <div className="relative">
+                  <select
+                    id="service"
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    className={`${inputClasses} appearance-none cursor-pointer pr-10 font-bold`}
+                  >
+                    <option value="parts">Spare Parts Request</option>
+                    <option value="gas">Refrigerant Gas Query</option>
+                    <option value="maintenance">Maintenance Support</option>
+                    <option value="wholesale">Wholesale Inquiry</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-400">
+                    <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="message" className={labelClasses}>Requirements Details</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  required
+                  value={formData.message}
+                  onChange={handleChange}
+                  className={`${inputClasses} resize-none min-h-[120px]`}
+                  placeholder="List part numbers, quantities, or specific models..."
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white font-black text-lg py-5 rounded-2xl hover:bg-blue-700 hover:shadow-2xl hover:shadow-blue-600/30 hover:-translate-y-1 transition-all duration-500 flex items-center justify-center gap-3 uppercase tracking-widest shadow-xl shadow-blue-500/10"
+              >
+                <Send size={20} />
+                Send Inquiry
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

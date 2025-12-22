@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -15,7 +16,6 @@ import Catalogues from './pages/Catalogues';
 import WhatsAppButton from './components/WhatsAppButton';
 import { StoreProvider } from './context/StoreContext';
 
-// Wrapper to handle scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   React.useEffect(() => {
@@ -23,10 +23,6 @@ const ScrollToTop = () => {
   }, [pathname]);
   return null;
 };
-
-// Layout component to hide Header/Footer on specific routes if needed, 
-// but for now we keep them everywhere except maybe Admin if we wanted a full screen dashboard.
-// We'll keep Navbar on Admin for easy navigation back to site.
 
 const App: React.FC = () => {
   return (

@@ -1,10 +1,12 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../context/StoreContext';
-import { Lock, Mail, User, Phone, ArrowRight } from 'lucide-react';
+import { Lock, Mail, User, Phone, ArrowRight, Loader2 } from 'lucide-react';
 
 const Login: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { loginUser, registerUser } = useStore();
   const navigate = useNavigate();
 
@@ -23,31 +25,32 @@ const Login: React.FC = () => {
     setError('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
-    if (isLogin) {
-      const success = loginUser(formData.email, formData.password);
-      if (success) {
-        navigate('/profile');
+    try {
+      if (isLogin) {
+        const success = await loginUser(formData.email, formData.password);
+        if (success) {
+          navigate('/profile');
+        } else {
+          setError('Invalid email or password');
+        }
       } else {
-        setError('Invalid email or password');
-      }
-    } else {
-      // Register logic
-      if (formData.password !== formData.confirmPassword) {
-        setError('Passwords do not match');
-        return;
-      }
-      if (formData.password.length < 4) {
-        setError('Password must be at least 4 characters');
-        return;
-      }
-      
-      // Simple register
-      try {
-        registerUser({
+        if (formData.password !== formData.confirmPassword) {
+          setError('Passwords do not match');
+          setIsLoading(false);
+          return;
+        }
+        if (formData.password.length < 6) {
+          setError('Password must be at least 6 characters');
+          setIsLoading(false);
+          return;
+        }
+        
+        await registerUser({
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
@@ -55,9 +58,12 @@ const Login: React.FC = () => {
           address: ''
         });
         navigate('/profile');
-      } catch (e) {
-        setError('Registration failed. Email might be in use.');
       }
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || 'An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -80,10 +86,9 @@ const Login: React.FC = () => {
           </p>
         </div>
         
-        {/* Toggle */}
         <div className="flex bg-slate-100/80 p-1.5 rounded-xl">
           <button
-            onClick={() => setIsLogin(true)}
+            onClick={() => { setIsLogin(true); setError(''); }}
             className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all duration-200 ${
               isLogin ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
             }`}
@@ -91,7 +96,7 @@ const Login: React.FC = () => {
             Sign In
           </button>
           <button
-            onClick={() => setIsLogin(false)}
+            onClick={() => { setIsLogin(false); setError(''); }}
             className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all duration-200 ${
               !isLogin ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
             }`}
@@ -182,12 +187,19 @@ const Login: React.FC = () => {
           <div className="pt-2">
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-0.5"
+              disabled={isLoading}
+              className="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {isLogin ? 'Sign In' : 'Create Account'}
-              <span className="absolute right-0 inset-y-0 flex items-center pr-4">
-                <ArrowRight className="h-5 w-5 text-blue-200 group-hover:text-white transition-colors" aria-hidden="true" />
-              </span>
+              {isLoading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <>
+                  {isLogin ? 'Sign In' : 'Create Account'}
+                  <span className="absolute right-0 inset-y-0 flex items-center pr-4">
+                    <ArrowRight className="h-5 w-5 text-blue-200 group-hover:text-white transition-colors" aria-hidden="true" />
+                  </span>
+                </>
+              )}
             </button>
           </div>
         </form>
